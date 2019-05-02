@@ -1,5 +1,24 @@
-@import 'core/settings';
 
 body {
-	background-color: pink;
+	background-color: white;
+}
+.main__title{
+	text-align: center;
+}
+.form__number-cards{
+	text-align: center;
+}
+
+.card__container{
+	display:flex;
+	background-color:white;
+	height: 200px;
+	justify-content: center;
+	margin-top :20px;
+}
+.card{
+	width: 160px;
+	background-color: #fff;
+	margin:0 10px;
+	background: url('https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB');
 }
