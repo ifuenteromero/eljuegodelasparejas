@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.scss","main.css"],"names":[],"mappings":"AAEA;EACC,sBAAsB;ACDvB","file":"main.css","sourcesContent":["@import 'core/settings';\n\nbody {\n\tbackground-color: pink;\n}\n","body {\n  background-color: pink;\n}\n"]}
