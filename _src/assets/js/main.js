@@ -55,12 +55,10 @@ function printDefaultImages(arrayCards){
         card.classList.add('card');
         cardImage.classList.add('card__image');
         cardImage.setAttribute('src',defaultImage);
-        addObjectArrayGame(i,arrayCards[i].image,arrayCards[i].pair);
-       
+        addObjectArrayGame(i,arrayCards[i].image,arrayCards[i].pair);   
         cardImage.setAttribute('id',i);
         card.addEventListener('click',changeImage);
-       
-       
+        cardImage.setAttribute('data-paired',false);
     }
     // console.log(arrayObjectsGame);
 }
@@ -69,21 +67,40 @@ function changeImage(event){
     const card= event.currentTarget;
     const cardImage = card.querySelector('img');
     const cardImageId = parseInt(cardImage.getAttribute('id'));
-    // console.log(cardImageId);
     const currentImage = cardImage.src;
     const obj = arrayObjectsGame.find(card=>card.id===cardImageId);
+    console.log(obj);
+    const fronted = arrayObjectsFront.includes(obj);
+    console.log(fronted);
     
-    // console.log(arrayObjectsGame);
-    if (currentImage == defaultImage){
+    if (!fronted){
         cardImage.setAttribute('src',arrayObjectsGame[cardImageId].image);
-        arrayObjectsFront.push(obj);   
+        arrayObjectsFront.push(obj);  
+        if(arrayObjectsFront.length ===2){
+            const currentPair = obj.pair;
+            const otherPair = arrayObjectsFront[0].pair;
+            // console.log ('current'+currentPair);
+            // console.log ('other'+otherPair);
+            if (currentPair==otherPair){
+                const otherId = arrayObjectsFront[0].id;
+                const currentId = obj.id;
+                const otherCard = document.getElementById(otherId);
+                const currentCard = document.getElementById(currentId);
+                otherCard.setAttribute('data-paired',true);
+                currentCard.setAttribute('data-paired',true);
+                console.log(otherCard,currentCard);
+            }
+            else{ setTimeout(allCardsBack,2000);}
+            arrayObjectsFront=[];
+        }
+        
     }
-    else{
-        cardImage.setAttribute('src',defaultImage);
-        arrayObjectsFront=arrayObjectsFront.filter(card=>card.id!==cardImageId);
+    // else{
+    //     cardImage.setAttribute('src',defaultImage);
+    //     arrayObjectsFront=arrayObjectsFront.filter(card=>card.id!==cardImageId);
 
-    }
-    console.log(arrayObjectsFront);
+    // }
+    console.log(arrayObjectsFront); 
 }
 
 function createObject(id,image,pair){
@@ -97,12 +114,27 @@ function createObject(id,image,pair){
 }
 function addObjectArrayGame(id,image,pair){
     const obj = createObject(id,image,pair);
-    arrayObjectsGame.push(obj);
-    
+    arrayObjectsGame.push(obj);    
 }
 
 
 function borrarcache(){
+    // localStorage.removeItem('numberCards');
+    allCardsBack();
+}
 
-    localStorage.removeItem('numberCards');
+function allCardsBack(){
+    arrayObjectsFront=[];
+    const allCards = document.querySelectorAll('.card__image');
+    // const cardsNotPaired = allCards.filter(card=>
+    //     !card.getAttribute('data-paired'));
+    console.log(allCards);
+    for (const card of allCards){
+        const paired = card.getAttribute('data-paired');
+        if(paired=='false'){
+            card.src = defaultImage;
+        }
+       
+    }
+    console.log(arrayObjectsFront);
 }
