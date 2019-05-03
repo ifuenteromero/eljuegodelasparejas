@@ -12,8 +12,22 @@
     
     <body>
         <div class="page">
-            <header class="page__header">Header</header>
-            <main class="page__main">Main</main>
+             <h1 class="main__title">El juego de las parejas</h1>
+
+            <form class="form__number-cards">
+                <label for="card4">4</label>
+                <input class="radio-option" type="radio" id="card4" value="4"
+                name="number-cards" checked>
+                <label for="card6">6</label>
+                <input class="radio-option" type="radio" id="card6" value="6"
+                name="number-cards">
+                <label for="card8">8</label>
+                <input class="radio-option" type="radio" id="card8" value="8"
+                name="number-cards">
+                <button type="button" class="btn--begin">Comenzar</button>
+            </form>
+            <button type="button" class="aux">Aux</button>
+            <ul class="card__container"></ul>
         </div>
         <script src="assets/js/main.js"></script>
     </body>
