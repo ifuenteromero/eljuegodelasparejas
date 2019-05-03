@@ -9,7 +9,7 @@ const aux = document.querySelector('.aux');
 const defaultImage = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB';
 let arrayCards =[];
 let arrayObjectsGame = [];
-let arrayObjectsCache=[];
+let arrayObjectsFront=[];
 let numberCards =4;
 getNumberCardsSaved();
 
@@ -36,6 +36,7 @@ btnBeginEl.addEventListener('click',getCards);
 aux.addEventListener('click',borrarcache);
 
 function getCards(){
+    arrayObjectsFront=[];
     cardContainer.innerHTML='';
     fetch ('https://raw.githubusercontent.com/Adalab/cards-data/master/'+numberCards+'.json')
     .then(response => response.json())
@@ -43,8 +44,7 @@ function getCards(){
         printDefaultImages(arrayCards) });     
 }
 
-function printDefaultImages(arrayCards){
-  
+function printDefaultImages(arrayCards){ 
     arrayObjectsGame=[];
     for(let i=0;i<arrayCards.length;i++)
     { 
@@ -76,15 +76,14 @@ function changeImage(event){
     // console.log(arrayObjectsGame);
     if (currentImage == defaultImage){
         cardImage.setAttribute('src',arrayObjectsGame[cardImageId].image);
-        
-        
-       
+        arrayObjectsFront.push(obj);   
     }
     else{
         cardImage.setAttribute('src',defaultImage);
-       
+        arrayObjectsFront=arrayObjectsFront.filter(card=>card.id!==cardImageId);
+
     }
-    
+    console.log(arrayObjectsFront);
 }
 
 function createObject(id,image,pair){
@@ -99,10 +98,12 @@ function createObject(id,image,pair){
 function addObjectArrayGame(id,image,pair){
     const obj = createObject(id,image,pair);
     arrayObjectsGame.push(obj);
-    localStorage.setItem('pairsGame',JSON.stringify(arrayObjectsGame));
-    //  console.log(arrayObjectsGame);
+    
 }
 
 
+function borrarcache(){
 
+    localStorage.removeItem('numberCards');
+}
 //# sourceMappingURL=main.js.map
