@@ -1,6 +1,14 @@
-
+.page{
+	display: flex;
+	flex-direction: column;
+	// width:600px;
+	justify-content: center;
+	align-items: center;
+}
 body {
 	background-color: white;
+	display: flex;
+	justify-content: center;
 }
 .main__title{
 	text-align: center;
@@ -16,9 +24,18 @@ body {
 	justify-content: center;
 	margin-top :20px;
 	list-style: none;
+	// width: 600px;
+	flex-wrap: wrap;
 }
 .card{
 	width: 160px;
 	background-color: #fff;
 	margin:0 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid black;
+}
+.card__image{
+	// border: 2px solid black;
 }
