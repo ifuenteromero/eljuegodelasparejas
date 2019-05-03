@@ -8,11 +8,12 @@ const cardContainer = document.querySelector('.card__container');
 const aux = document.querySelector('.aux');
 const defaultImage = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB';
 let arrayCards =[];
-let arrayImages =[];
+
 let arrayObjectsGame = [];
 let arrayObjectsCache=[];
 let numberCards =4;
 getNumberCardsSaved();
+getDataFromCache();
 
 function getNumberCardsSaved(){
     const data = localStorage.getItem('numberCards');
@@ -44,7 +45,7 @@ function getCards(){
 }
 
 function printDefaultImages(arrayCards){
-    arrayImages=[];
+  
     arrayObjectsGame=[];
     for(let i=0;i<arrayCards.length;i++)
     { 
@@ -59,7 +60,7 @@ function printDefaultImages(arrayCards){
        
         cardImage.setAttribute('id',i);
         card.addEventListener('click',changeImage);
-        arrayImages.push(arrayCards[i].image);
+       
        
     }
     // console.log(arrayObjectsGame);
@@ -75,7 +76,7 @@ function changeImage(event){
     
     // console.log(arrayObjectsGame);
     if (currentImage == defaultImage){
-        cardImage.setAttribute('src',arrayImages[cardImageId]);
+        cardImage.setAttribute('src',arrayObjectsGame[cardImageId].image);
          addObjectCache(obj);
         
        
@@ -100,6 +101,7 @@ function createObject(id,image,pair){
 function addObjectArrayGame(id,image,pair){
     const obj = createObject(id,image,pair);
     arrayObjectsGame.push(obj);
+    localStorage.setItem('pairsGame',JSON.stringify(arrayObjectsGame));
     //  console.log(arrayObjectsGame);
 }
 
@@ -113,13 +115,40 @@ function removeObjectCache(obj){
 }
 function borrarcache(){
     localStorage.removeItem('savedPairs');
+    localStorage.removeItem('pairsGame');
+    localStorage.removeItem('numberCards');
 }
 
 function getDataFromCache(){
     const data = JSON.parse(localStorage.getItem('savedPairs'));
     if(data){ arrayObjectsCache =data}else{arrayObjectsCache=[];}
+    const dataGame = JSON.parse(localStorage.getItem('pairsGame'));
+    if (dataGame){arrayObjectsGame=dataGame}else{arrayObjectsGame=[]};
    
 }
 
-getDataFromCache();
+
 console.log(arrayObjectsCache);
+console.log(arrayObjectsGame);
+printFromCache();
+function printFromCache(){
+    for(let i=0;i<arrayObjectsGame.length;i++)
+    { 
+        const card = document.createElement('li');
+        cardContainer.appendChild(card);
+        const cardImage = document.createElement('img');
+        card.appendChild(cardImage);
+        card.classList.add('card');
+        cardImage.classList.add('card__image');
+        const obj = arrayObjectsCache.find(card=>card.id===i);
+        let currentImage=defaultImage;
+        if(obj){currentImage=arrayObjectsGame[i].image;}
+        cardImage.setAttribute('src',currentImage);
+        // addObjectArrayGame(i,arrayCards[i].image,arrayCards[i].pair);
+       
+        cardImage.setAttribute('id',i);
+        card.addEventListener('click',changeImage);
+       
+    }
+    // console.log(arrayObjectsGame);
+}
