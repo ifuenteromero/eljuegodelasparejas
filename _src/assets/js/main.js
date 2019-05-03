@@ -113,11 +113,7 @@ function removeObjectCache(obj){
     arrayObjectsCache = arrayObjectsCache.filter(objeto=>objeto.id!==obj.id);
     localStorage.setItem('savedPairs',JSON.stringify(arrayObjectsCache));
 }
-function borrarcache(){
-    localStorage.removeItem('savedPairs');
-    localStorage.removeItem('pairsGame');
-    localStorage.removeItem('numberCards');
-}
+
 
 function getDataFromCache(){
     const data = JSON.parse(localStorage.getItem('savedPairs'));
